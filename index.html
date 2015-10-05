@@ -1,0 +1,42 @@
+<!doctype HTML>
+<html>
+<head>
+	<title>Mandelbrot</title>
+</head>
+<body>
+	<canvas id="can" style="border:2px solid black" >El canvas de HTML5 no rula.</canvas>
+	<script type="text/javascript">
+	var cuadro = document.getElementById("can");
+	cuadro.height = 0.95*window.innerHeight;
+	cuadro.width = 0.95*window.innerWidth;
+	var pluma = cuadro.getContext("2d");
+	var iterations = 60;
+	for (var i = 0; i < cuadro.width; i++) {
+		for (var j = 0; j < cuadro.height; j++){
+			var a = i/cuadro.height*(12/5) - 2.0;
+			var b = j/cuadro.height*(12/5) - 1.2;
+			var c = 0;
+			while (a*a + b*b < 4 && c<iterations){
+				var d = a*a - b*b + i/cuadro.height*(12/5) - 2.0;
+				b = 2*a*b + j/cuadro.height*(12/5) - 1.2;
+				a = d;
+				c++;
+			}
+			if (c==iterations){
+				pluma.fillStyle = "black";
+				pluma.fillRect(i, j, 1, 1);
+			} else {
+				if (c>iterations/2){
+					pluma.fillStyle = "grey";
+					pluma.fillRect(i, j, 1, 1);
+				} else {
+					if (c>iterations/4){
+						pluma.fillStyle = "lightgrey";
+						pluma.fillRect(i, j, 1, 1);
+					}
+				}
+			}
+		}
+	}
+	</script>
+</body>
